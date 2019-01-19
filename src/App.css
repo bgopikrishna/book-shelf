@@ -1,32 +1,117 @@
-.App {
-  text-align: center;
+body {
+  margin: 0;
+  padding: 0;
+  background: #f1f1e6;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+input {
+  color: #001527;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.btn-small {
+  height: 32.4px;
+  line-height: 32.4px;
+  font-size: 10px;
+  font-weight: bold;
+}
+.btn-flat {
+  color: #001527;
+}
+.card {
+  /* background: #001527; */
+  background: whitesmoke;
+  color: #001527;
+  min-height: 300px;
+}
+.card .card-content .card-title {
+  line-height: 1;
+  margin: 5px auto;
+  color: #009aff;
+}
+.card.horizontal .card-image {
+  max-width: 30%;
+}
+.card.horizontal .card-image img {
+  height: 100%;
+}
+.card .card-action {
+  background-color: inherit;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-around;
+  border-top: 1px solid rgba(160, 160, 160, 0.2);
+  position: relative;
+  padding: 4px;
+}
+.author {
+  font-size: 14px;
+  color: #feba3e;
 }
 
-.App-link {
-  color: #61dafb;
+.btn-small:hover,
+.btn-small:focus {
+  color: whitesmoke;
+  background: #001527 !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+button {
+  margin: inherit 40px;
+}
+button:disabled {
+  color: red !important;
+}
+
+nav {
+  background: #001527;
+  padding: 0 15px;
+}
+
+.input-field {
+  display: flex;
+  margin-top: 0;
+  align-items: flex-start;
+  width: 100%;
+  padding: 2px 10px;
+}
+.input-field input[type="search"],
+.input-field button {
+  height: 40px !important;
+  padding: auto 10px;
+  box-align: border-box;
+}
+
+.input-field button {
+  color: #f1f1e6;
+  background: #001527;
+}
+.input-field button:hover,
+.input-field button:focus {
+  background: #f1f1e6;
+  color: #001527;
+  border: 2px solid #001527;
+}
+.input-field input[type="search"]:hover,
+.input-field input[type="search"]:focus {
+  background: #f1f1e6;
+}
+@media (max-width: 900px) {
+  .btn-small {
+    line-height: 1;
+    font-size: 10px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .card .card-content {
+    padding: 14px;
+  }
+  .author {
+    font-size: 10px;
+  }
+  .card .card-content .card-title {
+    line-height: 1;
+    margin: 0;
+  }
+  nav {
+    padding: 2px;
+  }
+  nav .brand-logo {
+    font-size: 18px;
   }
 }
