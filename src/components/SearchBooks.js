@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import BookCard from "./BookCard";
-import Preloader from "./Preloader";
+// import Preloader from "./Preloader"; //disable es-lint
 import SearchForm from "./SearchForm";
-import { handleFetchedData } from "../helperFunctions";
+import {
+  handleFetchedData,
+  onlyUnique,
+  addToLocalStorage
+} from "../helperFunctions";
 
 const URL = "https://www.googleapis.com/books/v1/volumes?";
 const APIkey = "&key=AIzaSyCjLjUcPmkq5G13-QZ2Ro7ugoDJNbTOVnA";
@@ -16,7 +20,8 @@ class SearchBooks extends Component {
       searchField: "",
       booksFetched: [],
       error: null,
-      loading: true
+      loading: true,
+      filterdShelves: []
     };
   }
 
@@ -49,7 +54,30 @@ class SearchBooks extends Component {
       })
       .catch(error => this.setState({ error }));
   };
+  addBookToShelf = (id, shelf) => {
+    const { booksFetched } = this.state;
+    let newBookShelfData;
+    if (booksFetched) {
+      newBookShelfData = booksFetched
+        .map(book => {
+          if (book.id === id) {
+            book.shelf = shelf;
+          }
+          return book;
+        })
+        .filter(book => book.shelf); //Filter the books for only shelved books
+    }
+    /*add Items to filterdShelve array which contains book with shelf property defined ["cr","r","toR"] and Removing the duplicates*/
+    let filterdShelves = [
+      ...this.state.filterdShelves,
+      ...newBookShelfData
+    ].filter(onlyUnique);
 
+    this.setState(
+      { filterdShelves }, //Setting the state with new Filtered shelf arry
+      () => addToLocalStorage("bookShelf", filterdShelves) // A callback for storing the data in local storage
+    );
+  };
   //Rendering the Component
   render() {
     const { searchField, booksFetched } = this.state;
@@ -67,7 +95,7 @@ class SearchBooks extends Component {
               <BookCard
                 key={book.id}
                 book={book}
-                handleCounter={this.props.handleCounter}
+                addBookToShelf={this.addBookToShelf}
               />
             ))}
         </div>
@@ -77,13 +105,3 @@ class SearchBooks extends Component {
 }
 
 export default SearchBooks;
-
-// {
-//   /* <form>
-//         <div className="input-field">
-//           <input id="search" type="search" required>
-//           <label className="label-icon" for="search"><i className="material-icons">search</i></label>
-//           <i className="material-icons">close</i>
-//         </div>
-//       </form> */
-// }

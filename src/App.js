@@ -13,32 +13,18 @@ export class App extends Component {
         currentlyReading: [],
         toRead: [],
         read: []
-      },
-      counter: 0
+      }
     };
   }
-  handleCounter() {
-    this.setState({
-      counter: this.state.counter + 1
-    });
-  }
+
   render() {
     return (
       <BrowserRouter>
         <div className="App">
           <Navbar />
           <Switch>
-            <Route
-              exact
-              path="/"
-              component={() => <Home count={this.state.counter} />}
-            />
-            <Route
-              path="/search"
-              component={() => (
-                <SearchBooks handleCounter={this.handleCounter} />
-              )}
-            />
+            <Route exact path="/" component={Home} />
+            <Route path="/search" component={SearchBooks} />
           </Switch>
         </div>
       </BrowserRouter>
@@ -46,5 +32,5 @@ export class App extends Component {
   }
 }
 
-const Home = ({ count }) => <div>Home {count}</div>;
+const Home = () => <div>Home</div>;
 export default App;

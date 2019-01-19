@@ -21,6 +21,10 @@ input {
   background: whitesmoke;
   color: #001527;
   min-height: 300px;
+
+}
+.card > * {
+  transition: 0.3s ease-in-out;
 }
 .card .card-content .card-title {
   line-height: 1;
