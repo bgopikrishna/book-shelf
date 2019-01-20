@@ -5,13 +5,14 @@ import SearchForm from "./SearchForm";
 import {
   handleFetchedData,
   onlyUnique,
-  addToLocalStorage
+  addToLocalStorage,
+  getDataFromLocalStorage
 } from "../helperFunctions";
 
 const URL = "https://www.googleapis.com/books/v1/volumes?";
 const APIkey = "&key=AIzaSyCjLjUcPmkq5G13-QZ2Ro7ugoDJNbTOVnA";
 
-class SearchBooks extends Component {
+class SearchBooksPage extends Component {
   constructor(props) {
     super(props);
 
@@ -72,12 +73,25 @@ class SearchBooks extends Component {
       ...this.state.filterdShelves,
       ...newBookShelfData
     ].filter(onlyUnique);
+    console.log(filterdShelves);
 
     this.setState(
       { filterdShelves }, //Setting the state with new Filtered shelf arry
       () => addToLocalStorage("bookShelf", filterdShelves) // A callback for storing the data in local storage
     );
   };
+
+  //getting data from local storage when compnent mounts
+
+  componentDidMount() {
+    let localBooksData = getDataFromLocalStorage("bookShelf");
+    if (localBooksData) {
+      localBooksData = localBooksData.filter(onlyUnique);
+      this.setState({
+        filterdShelves: [...localBooksData]
+      });
+    }
+  }
   //Rendering the Component
   render() {
     const { searchField, booksFetched } = this.state;
@@ -104,4 +118,4 @@ class SearchBooks extends Component {
   }
 }
 
-export default SearchBooks;
+export default SearchBooksPage;

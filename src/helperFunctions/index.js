@@ -24,6 +24,17 @@ export const onlyUnique = (value, index, self) => self.indexOf(value) === index;
 
 export const addToLocalStorage = (key, data) => {
   if (localStorage) {
+    // let oldData = JSON.parse(localStorage.getItem(key));
+    // if (oldData && oldData.length !== 0) {
+    //   oldData = oldData.filter(onlyUnique)
+    //   const newData = [...oldData, ...data].filter(onlyUnique);
+    //   localStorage.setItem(key, JSON.stringify(newData));
+    // } else {
+    //   localStorage.setItem(key, JSON.stringify(data));
+    // }
     localStorage.setItem(key, JSON.stringify(data));
   }
 };
+
+export const getDataFromLocalStorage = key =>
+  JSON.parse(localStorage.getItem(key));

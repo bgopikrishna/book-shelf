@@ -21,10 +21,19 @@ input {
   background: whitesmoke;
   color: #001527;
   min-height: 300px;
-
 }
 .card > * {
   transition: 0.3s ease-in-out;
+}
+.container {
+  text-align: center;
+}
+.container h2 {
+  font-size: 1.4em;
+}
+.row .shelf-title {
+  font-size: 2em;
+  text-align: center;
 }
 .card .card-content .card-title {
   line-height: 1;

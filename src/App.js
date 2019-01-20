@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
-import SearchBooks from "./components/SearchBooks";
+import SearchBooks from "./components/SearchBooksPage";
 import Navbar from "./components/Navbar";
+import HomePage from "./components/HomePage";
+import Page404 from "./components/Page404";
 
 export class App extends Component {
   constructor(props) {
@@ -23,8 +25,9 @@ export class App extends Component {
         <div className="App">
           <Navbar />
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={HomePage} />
             <Route path="/search" component={SearchBooks} />
+            <Route path="/404" component={Page404} />
           </Switch>
         </div>
       </BrowserRouter>
@@ -32,5 +35,4 @@ export class App extends Component {
   }
 }
 
-const Home = () => <div>Home</div>;
 export default App;
