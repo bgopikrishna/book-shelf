@@ -6,7 +6,8 @@ import {
   handleFetchedData,
   onlyUnique,
   addToLocalStorage,
-  getDataFromLocalStorage
+  getDataFromLocalStorage,
+  bookShelfManager
 } from "../helperFunctions";
 
 const URL = "https://www.googleapis.com/books/v1/volumes?";
@@ -56,7 +57,7 @@ class SearchBooksPage extends Component {
       .catch(error => this.setState({ error }));
   };
   addBookToShelf = (id, shelf) => {
-    const { booksFetched, filterdShelves } = this.state;
+    let { booksFetched, filterdShelves } = this.state;
     let newBookShelfData;
     let isBookInShelfFlag = false; //A simple flag to check if the book is already present in the user shelves
     //Checking if the book is already available in the shelf
@@ -66,24 +67,15 @@ class SearchBooksPage extends Component {
     }
     //IF the book did't exist this will run
     if (booksFetched && !isBookInShelfFlag) {
-      newBookShelfData = booksFetched
-        .map(book => {
-          if (book.id === id) {
-            book.shelf = shelf;
-          }
-          return book;
-        })
-        .filter(book => book.shelf); //Filter the books for only shelved books
+      newBookShelfData = bookShelfManager(booksFetched, id, shelf); //Filter the books for only shelved books
     }
     //If the book already exists in the shelf , this condition will which will add to normal shelf
     else {
-      newBookShelfData = filterdShelves.map(book => {
-        if (book.id === id) {
-          book.shelf = shelf;
-        }
-        return book;
-      });
+      newBookShelfData = bookShelfManager(filterdShelves);
     }
+    // To change the status of the booksFetched books(items in array) so that it shows in UI buttons(toRead, read, Currently Reading)
+    booksFetched = bookShelfManager(booksFetched, id, shelf, true);
+
     /*add Items to filterdShelve array which contains book with shelf property defined ["cr","r","toR"] and Removing the duplicates*/
     let newfilterdShelves = [
       ...this.state.filterdShelves,

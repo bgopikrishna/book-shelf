@@ -12,7 +12,10 @@ const BookReadingComp = ({ readIngShelfData, ifEmptyMsg, addBookToShelf }) => {
       <div className="col s12 m12 l12 shelf-title">
         <h2>{ifEmptyMsg}</h2>
         <p>
-          Pick a book from <Link to="/search">Here</Link>
+          Pick a book from{" "}
+          <Link to="/search" role="search">
+            Here
+          </Link>
         </p>
       </div>
     );

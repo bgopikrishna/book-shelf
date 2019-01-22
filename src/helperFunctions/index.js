@@ -1,3 +1,11 @@
+import * as M from "materialize-css";
+
+const shelfParser = {
+  toR: "To Read",
+  cR: "Currently Reading",
+  r: "read"
+};
+
 //Parsing the Fetched Data from the api
 
 export const handleFetchedData = books => {
@@ -38,3 +46,20 @@ export const addToLocalStorage = (key, data) => {
 
 export const getDataFromLocalStorage = key =>
   JSON.parse(localStorage.getItem(key));
+
+export const bookShelfManager = (books, id, shelf, toast = false) => {
+  return books
+    .map(book => {
+      if (book.id === id) {
+        book.shelf = shelf;
+        if (toast) {
+          M.toast({
+            html: `"${book.title}" moved to shelf ${shelfParser[shelf]}`
+          });
+        }
+        // if callback exists the callback function works
+      }
+      return book;
+    })
+    .filter(book => book.shelf);
+};
