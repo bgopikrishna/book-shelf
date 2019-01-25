@@ -5,7 +5,7 @@ body {
 }
 
 input {
-  color: #001527;
+  color: #363b59;
 }
 .btn-small {
   height: 32.4px;
@@ -14,13 +14,13 @@ input {
   font-weight: bold;
 }
 .btn-flat {
-  color: #001527;
+  color: #363b59;
 }
 .card {
-  /* background: #001527; */
+  /* background: #363B59; */
   background: whitesmoke;
-  color: #001527;
-  min-height: 300px;
+  color: #363b59;
+  /* min-height: 300px; */
 }
 .card > * {
   transition: 0.3s ease-in-out;
@@ -40,12 +40,12 @@ input {
   margin: 5px auto;
   color: #009aff;
 }
-.card.horizontal .card-image {
+/* .card.horizontal .card-image {
   max-width: 30%;
 }
 .card.horizontal .card-image img {
   height: 100%;
-}
+} */
 .card .card-action {
   background-color: inherit;
   display: flex;
@@ -62,7 +62,7 @@ input {
 .btn-small:hover,
 .btn-small:focus {
   color: whitesmoke;
-  background: #001527 !important;
+  background: #363b59 !important;
 }
 
 button {
@@ -71,13 +71,16 @@ button {
 button:disabled {
   color: red !important;
 }
+i {
+  color: inherit;
+}
 
 nav {
-  background: #001527;
+  background: #363b59;
   padding: 0 15px;
 }
 .toast {
-  background: #001527;
+  background: #363b59;
   color: white;
   font-family: "Open Sans", Arial, sans-serif;
   font-weight: 500;
@@ -95,21 +98,40 @@ nav {
   padding: auto 10px;
   box-align: border-box;
 }
-
 .input-field button {
-  color: #f1f1e6;
-  background: #001527;
+  background: #363b59;
+  color: white;
+  border: 2px solid #363b59;
+
 }
+
 .input-field button:hover,
-.input-field button:focus {
+.input-field button:focus  {
   background: #f1f1e6;
-  color: #001527;
-  border: 2px solid #001527;
+  color: #363b59 !important;
+  border: 2px solid #363b59;
 }
 .input-field input[type="search"]:hover,
 .input-field input[type="search"]:focus {
   background: #f1f1e6;
 }
+.card-action .delete-book:hover,
+.card-action .delete-book:focus {
+  background: red !important;
+}
+
+@media (min-width: 900px) {
+  .card-action {
+    height: auto;
+  }
+  .card-action button {
+    height: 40px;
+    line-height: 1;
+    padding: 10px;
+    margin: auto 10px;
+  }
+}
+
 @media (max-width: 900px) {
   .btn-small {
     line-height: 1;

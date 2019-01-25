@@ -2,11 +2,22 @@ import React from "react";
 import { Link } from "react-router-dom";
 import BookCard from "./BookCard";
 
-const BookReadingComp = ({ readIngShelfData, ifEmptyMsg, addBookToShelf }) => {
+const BookReadingComp = ({
+  readIngShelfData,
+  ifEmptyMsg,
+  addBookToShelf,
+  deleteBookFromShelf
+}) => {
   const renderBooks =
     readIngShelfData.length !== 0 ? (
       readIngShelfData.map(book => (
-        <BookCard key={book.id} book={book} addBookToShelf={addBookToShelf} />
+        <BookCard
+          key={book.id}
+          book={book}
+          addBookToShelf={addBookToShelf}
+          deleteBookFromShelf={deleteBookFromShelf}
+          showFullDesc={false}
+        />
       ))
     ) : (
       <div className="col s12 m12 l12 shelf-title">

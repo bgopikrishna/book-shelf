@@ -62,6 +62,27 @@ class HomePage extends Component {
       addToLocalStorage("bookShelf", books)
     );
   };
+  //delete the book from the shelf
+  deleteBookFromShelf = id => {
+    let { books } = this.state;
+    let newBooks = books.filter(book => book.id !== id);
+
+    const newCurrentlyReading = newBooks.filter(book => book.shelf === "cR");
+    const newToRead = newBooks.filter(book => book.shelf === "toR");
+    const newRead = newBooks.filter(book => book.shelf === "r");
+    this.setState(
+      {
+        books: [...newBooks],
+        bookShelf: {
+          currentlyReading: newCurrentlyReading,
+          toRead: newToRead,
+          read: newRead
+        }
+      },
+      addToLocalStorage("bookShelf", newBooks)
+    );
+  };
+
   render() {
     const { bookShelf } = this.state;
     const { currentlyReading, toRead, read } = bookShelf;
@@ -70,6 +91,7 @@ class HomePage extends Component {
         ifEmptyMsg="Currently you're not reading any book"
         readIngShelfData={currentlyReading}
         addBookToShelf={this.addBookToShelf}
+        deleteBookFromShelf={this.deleteBookFromShelf}
       />
     );
     const readJSX = (
@@ -77,6 +99,8 @@ class HomePage extends Component {
         ifEmptyMsg="You're not done yet"
         readIngShelfData={read}
         addBookToShelf={this.addBookToShelf}
+        deleteBookFromShelf={this.deleteBookFromShelf}
+
       />
     );
     const toReadJSX = (
@@ -84,6 +108,8 @@ class HomePage extends Component {
         ifEmptyMsg="Add Some Books to Read"
         readIngShelfData={toRead}
         addBookToShelf={this.addBookToShelf}
+        deleteBookFromShelf={this.deleteBookFromShelf}
+
       />
     );
 
