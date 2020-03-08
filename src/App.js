@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import "./App.css";
-import SearchBooks from "./components/SearchBooksPage";
-import Navbar from "./components/Navbar";
-import HomePage from "./components/HomePage";
-import Page404 from "./components/Page404";
+import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import './App.css';
+import SearchBooks from './components/SearchBooksPage';
+import Navbar from './components/Navbar';
+import HomePage from './components/HomePage';
+import Page404 from './components/Page404';
 
 export class App extends Component {
   constructor(props) {
@@ -14,20 +14,23 @@ export class App extends Component {
       bookShelf: {
         currentlyReading: [],
         toRead: [],
-        read: []
-      }
+        read: [],
+      },
     };
   }
 
   render() {
     return (
       <BrowserRouter>
-        <div className="App">
+        <div className='App'>
           <Navbar />
           <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/search" component={SearchBooks} />
-            <Route path="/404" component={Page404} />
+            <Route exact path='/'>
+              <Redirect to='/home'></Redirect>
+            </Route>
+            <Route path='/home' component={HomePage} />
+            <Route path='/search' component={SearchBooks} />
+            <Route path='/404' component={Page404} />
           </Switch>
         </div>
       </BrowserRouter>

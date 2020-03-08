@@ -5,12 +5,12 @@ const Navlist = ({ className, id = "" }) => {
   return (
     <ul className={className} id={id}>
       <li>
-        <NavLink to="/search">
+        <NavLink to="/search" title="Search">
           <i className="material-icons">search</i>
         </NavLink>
       </li>
       <li>
-        <NavLink to="/"> Book Shelf</NavLink>
+        <NavLink to="/home"> Book Shelf</NavLink>
       </li>
       <li>
         <NavLink to="/404">Account</NavLink>

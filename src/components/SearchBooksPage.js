@@ -103,7 +103,7 @@ class SearchBooksPage extends Component {
           handleSubmit={this.handleSubmit}
           searchField={searchField}
         />
-        <div className="row">
+        <div className="grid">
           {booksFetched &&
             booksFetched.map(book => (
               <BookCard

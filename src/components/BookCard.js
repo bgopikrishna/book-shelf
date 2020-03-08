@@ -10,7 +10,7 @@ const BookCard = ({ book, handleCounter, addBookToShelf }) => {
     ? imageLinks
     : "https://placeimg.com/150/150/people/sepia";
   return (
-    <div className="col s12 m6 l4">
+    <div className="w-100">
       <div className="card hoverable horizontal">
         <div className="card-image">
           <img src={imageLinks.smallThumbnail} alt={title} />
