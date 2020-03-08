@@ -6,7 +6,8 @@ import {
   handleFetchedData,
   onlyUnique,
   addToLocalStorage,
-  getDataFromLocalStorage
+  getDataFromLocalStorage,
+  bookShelfManager
 } from "../helperFunctions";
 
 const URL = "https://www.googleapis.com/books/v1/volumes?";
@@ -56,33 +57,39 @@ class SearchBooksPage extends Component {
       .catch(error => this.setState({ error }));
   };
   addBookToShelf = (id, shelf) => {
-    const { booksFetched } = this.state;
+    let { booksFetched, filterdShelves } = this.state;
     let newBookShelfData;
-    if (booksFetched) {
-      newBookShelfData = booksFetched
-        .map(book => {
-          if (book.id === id) {
-            book.shelf = shelf;
-          }
-          return book;
-        })
-        .filter(book => book.shelf); //Filter the books for only shelved books
+    let isBookInShelfFlag = false; //A simple flag to check if the book is already present in the user shelves
+    //Checking if the book is already available in the shelf
+    let isBookInShelf = filterdShelves.filter(book => book.id === id);
+    if (isBookInShelf.length !== 0) {
+      isBookInShelfFlag = true;
     }
+    //IF the book did't exist this will run
+    if (booksFetched && !isBookInShelfFlag) {
+      newBookShelfData = bookShelfManager(booksFetched, id, shelf); //Filter the books for only shelved books
+    }
+    //If the book already exists in the shelf , this condition will which will add to normal shelf
+    else {
+      newBookShelfData = bookShelfManager(filterdShelves);
+    }
+    // To change the status of the booksFetched books(items in array) so that it shows in UI buttons(toRead, read, Currently Reading)
+    booksFetched = bookShelfManager(booksFetched, id, shelf, true);
+
     /*add Items to filterdShelve array which contains book with shelf property defined ["cr","r","toR"] and Removing the duplicates*/
-    let filterdShelves = [
+    let newfilterdShelves = [
       ...this.state.filterdShelves,
       ...newBookShelfData
     ].filter(onlyUnique);
-    console.log(filterdShelves);
+    // console.log(newfilterdShelves);
 
     this.setState(
-      { filterdShelves }, //Setting the state with new Filtered shelf arry
-      () => addToLocalStorage("bookShelf", filterdShelves) // A callback for storing the data in local storage
+      { filterdShelves: newfilterdShelves }, //Setting the state with new Filtered shelf arry
+      () => addToLocalStorage("bookShelf", newfilterdShelves) // A callback for storing the data in local storage
     );
   };
 
   //getting data from local storage when compnent mounts
-
   componentDidMount() {
     let localBooksData = getDataFromLocalStorage("bookShelf");
     if (localBooksData) {

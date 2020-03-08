@@ -1,10 +1,22 @@
 import React from "react";
+import CardButton from "./CardButton";
 
-const BookCard = ({ book, handleCounter, addBookToShelf }) => {
-  let { title, authors, desc, imageLinks } = book;
+const BookCard = ({
+  book,
+  showFullDesc = true,
+  addBookToShelf,
+  deleteBookFromShelf = null
+}) => {
+  let { title, authors, desc, imageLinks, id, shelf } = book;
 
-  desc = desc ? desc.slice(0, 200) + "..." : "No description";
+  desc = desc ? desc.slice(0, 150) + "  ..." : "No description";
+
   authors = authors ? "By " + authors.join(", ") : "No Information";
+
+  //For homepage where all authors dont require
+
+  authors = showFullDesc ? authors : book.authors[0];
+
   title = title ? title : "No Title Available";
   imageLinks = imageLinks
     ? imageLinks
@@ -13,48 +25,54 @@ const BookCard = ({ book, handleCounter, addBookToShelf }) => {
     <div className="w-100">
       <div className="card hoverable horizontal">
         <div className="card-image">
-          <img src={imageLinks.smallThumbnail} alt={title} />
+          <img
+            className="responsive-img"
+            src={imageLinks.smallThumbnail}
+            alt={title}
+          />
         </div>
         <div className="card-stacked">
           <div className="card-content ">
             <span className="card-title">{title}</span>
-            <span className="flow-text author">{authors}</span>
-            <p>{desc}</p>
+            <span className="flow-text author ">{authors}</span>
+
+            {showFullDesc && <p>{desc}</p>}
           </div>
           <div className="card-action">
-            <button
-              className="btn btn-small btn-flat"
-              href="#"
-              id="toRead"
-              onClick={() => addBookToShelf(book.id, "toR")}
-              disabled={
-                book.shelf === "toR" //toR means to Read
-              }
+            <CardButton
+              shelf={shelf}
+              id={"toR"}
+              onClick={() => addBookToShelf(id, "toR")}
             >
               To Read
-            </button>
-            <button
-              className="btn btn-small btn-flat"
-              href="#"
-              onClick={() => addBookToShelf(book.id, "cR")}
-              id="currentlyReading"
-              disabled={
-                book.shelf === "cR" //cr means currently Reading
-              }
+            </CardButton>
+
+            <CardButton
+              shelf={shelf}
+              id={"cR"}
+              onClick={() => addBookToShelf(id, "cR")}
             >
               Currently Reading
-            </button>
-            <button
-              className="btn btn-small btn-flat"
-              disabled={book.shelf === "r"}
-              href="#"
-              id="read"
-              onClick={
-                () => addBookToShelf(book.id, "r") // Here r means Read Read
-              }
+            </CardButton>
+
+            <CardButton
+              shelf={shelf}
+              id={"r"}
+              onClick={() => addBookToShelf(id, "r")}
             >
               Read
-            </button>
+            </CardButton>
+            {deleteBookFromShelf && (
+              <CardButton
+                id={"delete"}
+                onClick={() => deleteBookFromShelf(id)}
+                extraClass="delete-book"
+              >
+                <i title="delete" className="material-icons">
+                  delete
+                </i>
+              </CardButton>
+            )}
           </div>
         </div>
       </div>
